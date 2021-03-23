@@ -1,6 +1,6 @@
 import os
 import logging
-import h5py
+# import h5py
 import soundfile
 import librosa
 import numpy as np
