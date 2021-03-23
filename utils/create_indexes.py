@@ -6,7 +6,7 @@ import glob
 import datetime
 import time
 import logging
-import h5py
+# import h5py
 import librosa
 
 from utilities import create_folder, get_sub_filepaths
