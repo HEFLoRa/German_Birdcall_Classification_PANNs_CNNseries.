@@ -90,7 +90,7 @@ def train(args):
     # resume_iteration = args.resume_iteration
     early_stop = args.early_stop
     filename = args.filename
-    device = 'cuda' if (args.cuda and torch.cuda.is_available()) else 'cpu'
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
     # for fine-tune models
     pretrained_checkpoint_path = args.pretrained_checkpoint_path
     freeze_base = args.freeze_base
