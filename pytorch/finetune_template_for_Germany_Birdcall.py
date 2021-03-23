@@ -16,7 +16,7 @@ import torch.optim as optim
 import torch.utils.data
 
 from models import *
-import config
+# import config
 from utilities import (create_folder, get_filename, create_logging, Mixup,
                        StatisticsContainer)
 from pytorch_utils import (move_data_to_device, count_parameters, count_flops,
