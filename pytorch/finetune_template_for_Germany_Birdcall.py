@@ -132,7 +132,7 @@ def train(args):
     audio_path = "/mnt/Germany_Birdcall/Germany_Birdcall_resampled"
     # Split csv file training and test
     splitter = StratifiedShuffleSplit(n_splits=1, test_size=0.4, random_state=42)
-    for train_idx, test_idx in splitter.get_n_splits(X=train_csv, y=train_csv["gen"]):
+    for train_idx, test_idx in splitter.split(X=train_csv, y=train_csv["gen"]):
         train_df = train_csv.loc[train_idx, :].reset_index(drop=True)
         test_df = train_csv.loc[test_idx, :].reset_index(drop=True)
     # dataset = WaveformDataset(df: pd.DataFrame, datadir: str)
