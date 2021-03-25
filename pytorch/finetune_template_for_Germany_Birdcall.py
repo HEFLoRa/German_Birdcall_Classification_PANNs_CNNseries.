@@ -329,7 +329,7 @@ if __name__ == '__main__':
     parser_train.add_argument('--sample_rate', type=int, default=32000)
     parser_train.add_argument('--window_size', type=int, default=1024)
     parser_train.add_argument('--hop_size', type=int, default=320)
-    parser_train.add_argument('--mel_bins', type=int, default=128)
+    parser_train.add_argument('--mel_bins', type=int, default=64)
     parser_train.add_argument('--fmin', type=int, default=50)
     parser_train.add_argument('--fmax', type=int, default=14000)
     parser_train.add_argument('--model_type', type=str, required=True)
