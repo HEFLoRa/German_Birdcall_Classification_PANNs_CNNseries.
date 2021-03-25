@@ -43,7 +43,7 @@ class Transfer_Cnn14(nn.Module):
             fmax, audioset_classes_num)
 
         # Transfer to another task layer
-        self.fc_transfer = nn.Linear(1024, classes_num, bias=True)
+        self.fc_transfer = nn.Linear(2048, classes_num, bias=True)
 
         if freeze_base:
             # Freeze AudioSet pretrained layers
