@@ -129,7 +129,7 @@ def train(args):
     # The training csv file filtered minor classes by a Dropping_threshold (10)
     train_csv = pd.read_csv("Germany_Birdcall_resampled_filtered.csv")
     classes_num = len(train_csv["gen"].unique())
-    audio_path = "/mnt/Germany_Birdcall/Germany_Birdcall_resampled"
+    audio_path = "/mnt/GermanyBirdcall/Germany_Birdcall_resampled"
     # Split csv file training and test
     splitter = StratifiedShuffleSplit(n_splits=1, test_size=0.4, random_state=42)
     for train_idx, test_idx in splitter.split(X=train_csv, y=train_csv["gen"]):
