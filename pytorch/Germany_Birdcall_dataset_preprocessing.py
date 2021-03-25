@@ -101,7 +101,7 @@ class WaveformDataset(data.Dataset):
         # file_path = self.datadir / ebird_code / mp3_name
         file_path = self.datadir + "/" + gen + "/"+ sp + "/" + wav_name
         # y = librosa.core.load(file_path, SR)[0]
-        y, sr = sf.read(file_path)
+        y, sr = sf.read(file_path)  # value range (-1, 1)
         # random chopping or expending
         len_y = len(y)
         effective_length = SR * PERIOD
@@ -117,7 +117,7 @@ class WaveformDataset(data.Dataset):
             y = y.astype(np.float32)
 
         # waveform = int16_to_float32(float32_to_int16(y))
-        waveform = y
+        waveform = 1/2 * (y + 1)  #value range tranferred to [0, 1]
 
         '''Move Mel-Spectrogram Transformation from data.Dataset to nn.Module'''
         # # transfer to Mel-Spectrogram
