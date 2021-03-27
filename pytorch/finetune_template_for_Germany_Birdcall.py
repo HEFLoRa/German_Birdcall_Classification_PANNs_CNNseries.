@@ -218,6 +218,8 @@ def train(args):
     train_bgn_time = time.time()
     time1 = time.time()
     iteration = 0
+    best_mAP = 0
+    path_best = ".\\best_model_mAP.pth"
     for batch_data_dict in train_loader:
         """batch_data_dict: {
             'audio_name': (batch_size [*2 if mixup],), 
@@ -227,7 +229,7 @@ def train(args):
         """
 
         # Evaluate
-        if iteration % 3000 == 0 or (iteration == 0):
+        if iteration % 2000 == 0 or (iteration == 0):
             train_fin_time = time.time()
 
             # bal_statistics = evaluator.evaluate(eval_bal_loader)
@@ -244,6 +246,11 @@ def train(args):
             # statistics_container.append(iteration, bal_statistics, data_type='bal')
             statistics_container.append(iteration, test_statistics, data_type='test')
             statistics_container.dump()
+            
+            # save best model
+            if np.mean(test_statistics['average_precision'])) > best_mAP:
+              best_mAP = np.mean(test_statistics['average_precision']))
+              best_model_mAP = copy.deepcopy(model.state_dict())
 
             train_time = train_fin_time - train_bgn_time
             validate_time = time.time() - train_fin_time
@@ -306,8 +313,8 @@ def train(args):
         optimizer.step()
         optimizer.zero_grad()
 
-        if iteration % 10 == 0:
-            print('--- Iteration: {}, train time: {:.3f} s / 10 iterations ---' \
+        if iteration % 100 == 0:
+            print('--- Iteration: {}, train time: {:.3f} s / 100 iterations ---' \
                   .format(iteration, time.time() - time1))
             time1 = time.time()
 
@@ -317,6 +324,7 @@ def train(args):
 
         iteration += 1
 
+    torch.save(best_model_mAP, path_best)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Example of parser. ')
@@ -340,10 +348,10 @@ if __name__ == '__main__':
     parser_train.add_argument('--batch_size', type=int, default=32)
     parser_train.add_argument('--learning_rate', type=float, default=1e-3)
     parser_train.add_argument('--resume_iteration', type=int, default=0)
-    parser_train.add_argument('--early_stop', type=int, default=30000)  # ~10000 train samples, 32 batch size, ~100 epochs
+    parser_train.add_argument('--early_stop', type=int, default=300000)  # ~10000 train samples, 32 batch size, ~100 epochs
     parser_train.add_argument('--pretrained_checkpoint_path', type=str)
-    parser_train.add_argument('--freeze_base', action='store_true', default=True)
-
+#     parser_train.add_argument('--freeze_base', action='store_true', default=False)
+    parser_train.add_argument('--freeze_base', default=False)
     # Parse arguments
     args = parser.parse_args()
     args.filename = get_filename(__file__)
