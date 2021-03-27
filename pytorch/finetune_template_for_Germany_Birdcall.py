@@ -249,7 +249,7 @@ def train(args):
             
             # save best model
             if np.mean(test_statistics['average_precision']) > best_mAP:
-              best_mAP = np.mean(test_statistics['average_precision']))
+              best_mAP = np.mean(test_statistics['average_precision'])
               best_model_mAP = copy.deepcopy(model.state_dict())
 
             train_time = train_fin_time - train_bgn_time
