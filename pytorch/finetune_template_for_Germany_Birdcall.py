@@ -248,7 +248,7 @@ def train(args):
             statistics_container.dump()
             
             # save best model
-            if np.mean(test_statistics['average_precision'])) > best_mAP:
+            if np.mean(test_statistics['average_precision']) > best_mAP:
               best_mAP = np.mean(test_statistics['average_precision']))
               best_model_mAP = copy.deepcopy(model.state_dict())
 
