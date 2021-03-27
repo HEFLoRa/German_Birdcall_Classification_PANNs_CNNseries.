@@ -6,6 +6,7 @@ import pandas as pd
 import argparse
 import time
 import logging
+import copy
 
 import torch
 torch.backends.cudnn.benchmark=True
