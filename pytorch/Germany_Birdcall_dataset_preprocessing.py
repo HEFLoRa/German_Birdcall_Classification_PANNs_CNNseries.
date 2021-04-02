@@ -265,6 +265,24 @@ melspectrogram_parameters = {
 }
 
 
+def collate_fn(list_data_dict):
+    """Collate data.
+    Args:
+      list_data_dict, e.g., [{'audio_name': str, 'waveform': (clip_samples,), ...}, 
+                             {'audio_name': str, 'waveform': (clip_samples,), ...},
+                             ...]
+    Returns:
+      np_data_dict, dict, e.g.,
+          {'audio_name': (batch_size,), 'waveform': (batch_size, clip_samples), ...}
+    """
+    np_data_dict = {}
+    
+    for key in list_data_dict[0].keys():
+        np_data_dict[key] = np.array([data_dict[key] for data_dict in list_data_dict])
+    
+    return np_data_dict
+
+
 class SpectrogramDataset(data.Dataset):
     def __init__(self,
                  df: pd.DataFrame,
