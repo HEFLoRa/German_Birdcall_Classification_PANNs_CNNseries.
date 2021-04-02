@@ -252,18 +252,18 @@ def train(args):
 
     # Save model
     best_model_path = "best_"+model_type+balanced+augmentation+"freeze"\
-                      + str(freeze_base_num)+"_mAP={.3f}".format(best_mAP)
+                      + str(freeze_base_num)+"_mAP={:.3f}".format(best_mAP)
     torch.save(best_model, best_model_path+".pth")
 
     # Save validation results
     validation_results_path = "validation_results"+model_type+balanced\
                               + augmentation+"freeze"+str(freeze_base_num)\
-                              + "_mAP={.3f}".format(best_mAP)
+                              + "_mAP={:.3f}".format(best_mAP)
     validation_results.to_csv(validation_results_path+'.csv', index=False)
 
     time_end = time.time()
     time_cost = time_end - time_initial
-    print("The whole training process takes: {.3f} s".format(time_cost))
+    print("The whole training process takes: {:.3f} s".format(time_cost))
 
 
 if __name__ == '__main__':
