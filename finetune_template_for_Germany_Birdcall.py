@@ -79,7 +79,7 @@ def train(args):
     # Dataset
     # return a waveform and a one-hot encoded target.
     # The training csv file filtered minor classes by a Dropping_threshold (10)
-    train_csv = pd.read_csv("pytorch/Germany_Birdcall_resampled_filtered.csv")
+    train_csv = pd.read_csv("/mnt/Germany_Birdcall/German-Birdcall/Germany_Birdcall_resampled_filtered.csv")
     classes_num = len(train_csv["gen"].unique())
     audio_path = "/mnt/Germany_Birdcall/Germany_Birdcall_resampled"
     # Split csv file training and test
