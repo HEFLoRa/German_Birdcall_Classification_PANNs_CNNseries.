@@ -1,3 +1,5 @@
+sys.path.insert(1, os.path.join(sys.path[0], 'utils'))
+sys.path.insert(1, os.path.join(sys.path[0], 'pytorch'))
 # import functions
 from utils.utilities import (create_folder, get_filename, create_logging, Mixup, StatisticsContainer)
 from pytorch.models import *  # import all models
