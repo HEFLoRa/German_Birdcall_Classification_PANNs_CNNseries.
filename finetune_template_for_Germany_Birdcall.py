@@ -289,7 +289,7 @@ if __name__ == '__main__':
     parser_train.add_argument('--early_stop', type=int, default=20000)  # early_stop * batch_size / num_trn_samples = epoch
     parser_train.add_argument('--pretrained_checkpoint_path', type=str)
 #     parser_train.add_argument('--freeze_base', action='store_true', default=False)
-    parser_train.add_argument('--freeze_base_num', default=0)
+    parser_train.add_argument('--freeze_base_num', type=int, default=0)
     # Parse arguments
     args = parser.parse_args()
     args.filename = get_filename(__file__)
