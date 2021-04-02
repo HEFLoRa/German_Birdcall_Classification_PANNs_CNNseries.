@@ -1,12 +1,11 @@
 # import functions
 from utils.utilities import (create_folder, get_filename, create_logging, Mixup, StatisticsContainer)
-from utils.data_generator import collate_fn
 from pytorch.models import *  # import all models
 from pytorch.pytorch_utils import (move_data_to_device, do_mixup)
 from pytorch.evaluate import Evaluator
 from pytorch.losses import get_loss_func
 # Germany Birdcall
-from pytorch.Germany_Birdcall_dataset_preprocessing import WaveformDataset, BalancedSampler
+from pytorch.Germany_Birdcall_dataset_preprocessing import WaveformDataset, BalancedSampler, collate_fn
 from sklearn.model_selection import StratifiedShuffleSplit
 from pytorch.Transfer_models import *  # import all transfer_models
 import os
