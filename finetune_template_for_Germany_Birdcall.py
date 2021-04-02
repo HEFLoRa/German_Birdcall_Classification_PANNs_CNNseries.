@@ -1,3 +1,5 @@
+import os
+import sys
 sys.path.insert(1, os.path.join(sys.path[0], 'utils'))
 sys.path.insert(1, os.path.join(sys.path[0], 'pytorch'))
 # import functions
@@ -10,8 +12,6 @@ from pytorch.losses import get_loss_func
 from pytorch.Germany_Birdcall_dataset_preprocessing import WaveformDataset, BalancedSampler, collate_fn
 from sklearn.model_selection import StratifiedShuffleSplit
 from pytorch.Transfer_models import *  # import all transfer_models
-import os
-import sys
 import numpy as np
 import pandas as pd
 import argparse
