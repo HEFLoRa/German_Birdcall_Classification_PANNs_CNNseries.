@@ -179,7 +179,7 @@ def train(args):
 
             test_statistics = evaluator.evaluate(eval_test_loader)
             current_mAP = np.mean(test_statistics['average_precision'])
-            current_auc = test_statistics['auc']
+            current_auc = np.mean(test_statistics['auc'])
             logging.info('Validate test mAP: {:.3f}'.format(current_mAP))
             logging.info('Validate test Auc: {:.3f}'.format(current_auc))
             validation_results.loc[i] = [iteration, current_mAP, current_auc]
