@@ -176,6 +176,51 @@ class BaseSampler(object):
         logging.info('Load target time: {:.3f} s'.format(time.time() - load_time))
 
 
+class RandomSampler(BaseSampler):
+    def __init__(self, df, batch_size, random_seed=1234):
+        """Random sampler. Batch_data loops over the whole training set.
+
+        Args:
+          df: pd.Dataframe
+          batch_size: int
+          random_seed: int
+        """
+        super(RandomSampler, self).__init__(df, batch_size, random_seed)
+
+        self.indexes = np.arange(self.audios_num)
+
+        # Shuffle indexes
+        self.random_state.shuffle(self.indexes)
+
+        self.pointer = 0
+
+    def __iter__(self):
+        """Generate batch meta for training.
+
+        Returns:
+          batch_indices
+        """
+        batch_size = self.batch_size
+
+        while True:
+            batch_indices = []
+            i = 0
+            while i < batch_size:
+                index = self.indexes[self.pointer]
+                self.pointer += 1
+
+                # Shuffle indexes and reset pointer
+                if self.pointer >= self.audios_num:
+                    self.pointer = 0
+                    self.random_state.shuffle(self.indexes)
+
+                # If audio in black list then continue
+                batch_indices.append(index)
+                i += 1
+
+            yield batch_indices
+            
+            
 class BalancedSampler(BaseSampler):
     def __init__(self, df, batch_size, random_seed=1234):
         """Balanced sampler. Generate batch meta for training. Data are equally
