@@ -11,7 +11,7 @@ from pytorch.pytorch_utils import (move_data_to_device, do_mixup)
 from pytorch.evaluate import Evaluator
 from pytorch.losses import get_loss_func
 # Germany Birdcall
-from pytorch.Germany_Birdcall_dataset_preprocessing import WaveformDataset, BalancedSampler, collate_fn
+from pytorch.Germany_Birdcall_dataset_preprocessing import WaveformDataset, RandomSampler, BalancedSampler, collate_fn
 from sklearn.model_selection import StratifiedShuffleSplit
 from pytorch.Transfer_models import *  # import all transfer_models
 import numpy as np
@@ -104,12 +104,15 @@ def train(args):
             num_workers=num_workers,
             pin_memory=True)
     else:
+        train_sampler = RandomSampler(
+            df=train_df,
+            batch_size=batch_size * 2 if 'mixup' in augmentation else batch_size)
         train_loader = torch.utils.data.DataLoader(
             dataset=train_dataset,
-            batch_size=batch_size * 2 if 'mixup' in augmentation else batch_size,
+            batch_sampler=train_sampler,
             collate_fn=collate_fn,
-            shuffle=True,
-            num_workers=num_workers)
+            num_workers=num_workers,
+            pin_memory=True)
 
     eval_test_loader = torch.utils.data.DataLoader(
         dataset=test_dataset,
@@ -161,10 +164,15 @@ def train(args):
     train_bgn_time = time.time()
     time1 = time.time()
     iteration = 0
+    loss_sum = 0
+    loss_average = 0
     best_mAP = 0
     # store validation results with pd.dataframe
     validation_results = pd.DataFrame(columns=["iteration","mAP","Auc"])
+    # store training losses with pd.dataframe
+    training_results = pd.DataFrame(columns=["iteration","average loss"])
     i = 0
+    j = 0
     for batch_data_dict in train_loader:
         """batch_data_dict: {
             'audio_name': (batch_size [*2 if mixup],), 
@@ -235,6 +243,7 @@ def train(args):
         # Backward
         loss.backward()
         print(loss)
+        loss_sum += loss
 
         optimizer.step()
         optimizer.zero_grad()
@@ -243,7 +252,11 @@ def train(args):
             print('--- Iteration: {}, train time: {:.3f} s / 200 iterations ---' \
                   .format(iteration, time.time() - time1))
             time1 = time.time()
-
+            loss_average = loss_sum / 200
+            loss_sum = 0
+            training_results.loc[j] = [iteration, loss_average]
+            j += 1
+        
         # Stop learning
         if iteration == early_stop:
             break
@@ -260,6 +273,12 @@ def train(args):
                               + augmentation+"freeze"+str(freeze_base_num)\
                               + "_mAP={:.3f}".format(best_mAP)
     validation_results.to_csv(validation_results_path+'.csv', index=False)
+    
+    # Save training results
+    training_results_path = "training_results"+model_type+balanced\
+                              + augmentation+"freeze"+str(freeze_base_num)\
+                              + "_mAP={:.3f}".format(best_mAP)
+    training_results.to_csv(training_results_path+'.csv', index=False)    
 
     time_end = time.time()
     time_cost = time_end - time_initial
