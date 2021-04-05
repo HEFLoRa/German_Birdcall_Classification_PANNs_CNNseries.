@@ -18,10 +18,11 @@ class Transfer_Cnn14(nn.Module):
 
         # Freeze AudioSet pretrained layers
         count = 0
-        for param in self.base.parameters():
-            if count < freeze_base_num:
-                param.requires_grad = False
-                count += 1
+        for child in self.base.children():
+            if count < freeze_base_num: 
+                for param in child.parameters():
+                    param.requires_grad = False
+                    count += 1
 
         self.init_weights()
 
@@ -61,10 +62,11 @@ class Transfer_Cnn10(nn.Module):
 
         # Freeze AudioSet pretrained layers
         count = 0
-        for param in self.base.parameters():
-            if count < freeze_base_num:
-                param.requires_grad = False
-                count += 1
+        for child in self.base.children():
+            if count < freeze_base_num: 
+                for param in child.parameters():
+                    param.requires_grad = False
+                    count += 1
 
         self.init_weights()
 
@@ -104,10 +106,11 @@ class Transfer_Cnn6(nn.Module):
 
         # Freeze AudioSet pretrained layers
         count = 0
-        for param in self.base.parameters():
-            if count < freeze_base_num:
-                param.requires_grad = False
-                count += 1
+        for child in self.base.children():
+            if count < freeze_base_num: 
+                for param in child.parameters():
+                    param.requires_grad = False
+                    count += 1
 
         self.init_weights()
 
