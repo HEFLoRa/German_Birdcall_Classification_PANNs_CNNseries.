@@ -242,8 +242,8 @@ def train(args):
 
         # Backward
         loss.backward()
-        print(loss)
-        loss_sum += loss
+#         print(loss)
+        loss_sum += loss.item()
 
         optimizer.step()
         optimizer.zero_grad()
@@ -253,6 +253,7 @@ def train(args):
                   .format(iteration, time.time() - time1))
             time1 = time.time()
             loss_average = loss_sum / 200
+            print("average loss of recent 200 batches {:.5f}".format(loss_average))
             loss_sum = 0
             training_results.loc[j] = [iteration, loss_average]
             j += 1
