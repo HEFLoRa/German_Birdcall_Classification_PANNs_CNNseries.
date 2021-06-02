@@ -239,13 +239,6 @@ class BalancedSampler(BaseSampler):
         self.pointers_of_classes = state['pointers_of_classes']
 
 
-melspectrogram_parameters = {
-    "n_mels": 64,
-    "fmin": 50,
-    "fmax": 14000
-}
-
-
 def collate_fn(list_data_dict):
     """Collate data.
     Args:
