@@ -27,6 +27,9 @@ After preparing the German Birdcall Dataset and downloading the pretrained model
 python finetune_template_for_Germany_Birdcall.py train --workspace .. --model_type "Transfer_Cnn10" --pretrained_checkpoint_path "Cnn10_mAP=0.380.pth" --balanced none --augmentation mixup --freeze_base_num 0 --early_stop 50000
 ```
 
+## Result Analysis
+To analyze the training process and the model performance, refer to Jupyter notebooks in the Results Analysis folder. Also, some trained models have also been placed there, they are called in the Germany_Birdcall_Engine_nonemixup.ipynb.
+
 ## FAQs
 If users came across out of memory error, then try to reduce the batch size.
 
