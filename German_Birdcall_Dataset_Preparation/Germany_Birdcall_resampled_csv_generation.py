@@ -30,4 +30,4 @@ for gen in primary_labels:
               train_csv.loc[i] = [gen, sp, filename]
               i = i + 1
 train_csv.to_csv('Germany_Birdcall_resampled_filtered.csv', index=False)
-print(BIRD_CODE)
+# print(BIRD_CODE)
