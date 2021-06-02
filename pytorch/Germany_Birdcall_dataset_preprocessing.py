@@ -75,18 +75,8 @@ class WaveformDataset(data.Dataset):
         # waveform = int16_to_float32(float32_to_int16(y))
         waveform = 1/2 * (y + 1)  #value range tranferred to [0, 1]
 
-        '''Move Mel-Spectrogram Transformation from data.Dataset to nn.Module'''
-        # # transfer to Mel-Spectrogram
-        # melspec = librosa.feature.melspectrogram(y, sr=SR, **melspectrogram_parameters)
-        # melspec = librosa.power_to_db(melspec).astype(np.float32)
-        #
-        # image = mono_to_color(melspec)
-        # height, width, _ = image.shape
-        # image = cv2.resize(image, (int(width * self.img_size / height), self.img_size))
-        # image = np.moveaxis(image, 2, 0)
-        # image = (image / 255.0).astype(np.float32)
-
-        '''one-hot coding(BCEloss) ? or integer indexing(CrossEntropyLoss) ?'''
+        # Move Mel-Spectrogram Transformation from data.Dataset to nn.Module
+        
         # one-hot coding
         labels = np.zeros(len(BIRD_CODE), dtype=int)
         labels[BIRD_CODE[gen]] = 1
@@ -99,16 +89,6 @@ class WaveformDataset(data.Dataset):
         }
 
         return data_dict
-
-
-def float32_to_int16(x):
-    assert np.max(np.abs(x)) <= 1.2
-    x = np.clip(x, -1, 1)
-    return (x * 32767.).astype(np.int16)
-
-
-def int16_to_float32(x):
-    return (x / 32767.).astype(np.float32)
 
 
 class BaseSampler(object):
