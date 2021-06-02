@@ -2,7 +2,7 @@
 
 This repo contains code for the research internship topic: German Birdcall Classification in Soundscape, it's developed from the origional repo of PANNs provided in https://github.com/qiuqiangkong/audioset_tagging_cnn. 
 
-## 1. Environments
+### 1. Environments
 The codebase is developed with Python 3.7. Install requirements as follows:
 ```
 pip install -r requirements.txt
