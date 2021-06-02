@@ -11,7 +11,7 @@ def countFile(dir):
     return tmp
 
 train_csv = pd.DataFrame(columns = ["gen","sp","filename"])
-path = "/mnt/Germany_Birdcall/Germany_Birdcall_resampled"
+path = "Germany_Birdcall_resampled"
 Dropping_Threshold = 10
 primary_labels = os.listdir( path )
 i = 0
